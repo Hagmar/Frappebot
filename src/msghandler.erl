@@ -15,8 +15,15 @@ loop(Sock) ->
 process_msg(<<"PING :", Data/binary>>, Sock) ->
 	send("PONG :" ++ Data, Sock);
 
+process_msg(BinaryData, Sock) ->
+	case binary:split(BinaryData, <<" ">>) of
+		[Prefix | Message] ->
+			io:format("Prefix: ~p~nMessage: ~p~n", [Prefix, Message]);
+		_ ->
+			io:format("no~n")
+	end;
+
 process_msg(_, _) ->
-	io:format("TJENNAAA"),
 	ok.
 
 send(Data, Sock) ->
