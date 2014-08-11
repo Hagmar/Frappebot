@@ -9,7 +9,6 @@ start() ->
 	gen_tcp:send(Sock, "NICK Frappebot\r\n"),
 	gen_tcp:send(Sock, "USER Frappebot 0 * :Testing bot\r\n"),
 	gen_tcp:send(Sock, "JOIN #TJENNA\r\n"),
-	%{ok, Bin} = do_recv(Sock, []),
 	MsgHandler = spawn(fun() -> msghandler:loop(Sock) end),
 	receive_loop(Sock, MsgHandler).
 
